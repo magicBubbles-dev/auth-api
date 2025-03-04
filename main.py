@@ -25,6 +25,7 @@ cred = credentials.Certificate(firebase_creds)
 firebase_admin.initialize_app(cred)
 
 
+
 app = FastAPI()
 
 @app.get("/")
