@@ -12,13 +12,17 @@ import json
 load_dotenv()
 
 # Get Firebase credentials from env variable
-firebase_creds = os.getenv("FIREBASE_CREDENTIALS")
+firebase_creds_path = os.getenv("FIREBASE_CREDENTIALS")
 
-if not firebase_creds:
+if not firebase_creds_path:
     raise ValueError("FIREBASE_CREDENTIALS environment variable is not set")
 
+# Read the credentials file
+with open(firebase_creds_path) as f:
+    firebase_creds = json.load(f)
+
 # Initialize Firebase Admin SDK
-cred = credentials.Certificate(json.loads(firebase_creds))
+cred = credentials.Certificate(firebase_creds)
 firebase_admin.initialize_app(cred)
 
 app = FastAPI()
