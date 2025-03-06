@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel
 import firebase_admin
 import os
+import base64
 from dotenv import load_dotenv
 from firebase_admin import credentials, auth
 import requests
@@ -12,10 +13,12 @@ import json
 load_dotenv()
 
 
-firebase_creds_str = os.getenv("FIREBASE_CREDENTIALS")
+firebase_creds_b64 = os.getenv("FIREBASE_CREDENTIALS")
 
-if not firebase_creds_str:
+if not firebase_creds_b64:
     raise ValueError("FIREBASE_CREDENTIALS environment variable is not set")
+
+firebase_creds_str = base64.b64decode(firebase_creds_b64).decode("utf-8")
 
 # Convert JSON string to dictionary
 firebase_creds = json.loads(firebase_creds_str)
