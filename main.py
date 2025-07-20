@@ -1,4 +1,4 @@
-# filepath: /Users/prateek/Desktop/auth-api/main.py
+
 from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel
 import firebase_admin
@@ -9,7 +9,7 @@ from firebase_admin import credentials, auth
 import requests
 import json
 
-# Load environment variables from .env file
+
 load_dotenv()
 
 
@@ -20,10 +20,9 @@ if not firebase_creds_b64:
 
 firebase_creds_str = base64.b64decode(firebase_creds_b64).decode("utf-8")
 
-# Convert JSON string to dictionary
 firebase_creds = json.loads(firebase_creds_str)
 
-# Initialize Firebase Admin SDK
+
 cred = credentials.Certificate(firebase_creds)
 firebase_admin.initialize_app(cred)
 
@@ -35,7 +34,7 @@ app = FastAPI()
 def read_root():
     return {"message": "Welcome to the FastAPI Firebase Auth backend!"}
 
-# Signup model
+# signup model
 class SignupRequest(BaseModel):
     email: str
     password: str
@@ -48,7 +47,7 @@ def signup(request: SignupRequest):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-# Login model
+# login model
 class LoginRequest(BaseModel):
     email: str
     password: str
